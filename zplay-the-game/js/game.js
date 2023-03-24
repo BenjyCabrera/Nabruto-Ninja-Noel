@@ -27,7 +27,7 @@ const Game = {
 		this.player = new Player(0, 0, this);
 		this.background = new Background(this);
 
-		this.obstacles = [];
+		this.enemigos1 = [];
 
 		this.score = 0;
 
@@ -43,26 +43,28 @@ const Game = {
 			this.frameCounter++;
 			this.score += 0.01;
 
-			if (this.frameCounter % 60 === 0) this.generateObstacle();
+			if (this.frameCounter % 60 === 0) this.generateEnemigo1();
 
 			this.drawAll();
 			this.moveAll();
 
 			this.scoreBoard.update(this.score);
 
-			if (this.isCollision()) this.gameOver();
+			//if (this.isCollision()) this.gameOver();
 
 			if (this.isCollisionBullet()) console.log('Colisión bullet');
 
-			this.clearObstacles();
+			this.clearEnemigos1();
 		}, 1000 / this.fps);
 	},
 
 	drawAll() {
 		this.background.draw();
 
-		this.obstacles.forEach((obstacle) => {
-			obstacle.draw();
+
+
+		this.enemigos1.forEach((Enemigo1) => {
+			Enemigo1.draw(this.frameCounter);
 		});
 
 		this.player.draw(this.frameCounter);
@@ -71,40 +73,40 @@ const Game = {
 	moveAll() {
 		this.background.move();
 
-		this.obstacles.forEach((obstacle) => {
-			obstacle.move();
+		this.enemigos1.forEach((Enemigo1) => {
+			Enemigo1.move(this.frameCounter);
 		});
 
 		this.player.move(this.frameCounter);
 	},
 
-	clearObstacles() {
-		this.obstacles = this.obstacles.filter(
-			(obstacle) => obstacle.pos.x + obstacle.width > 0
+	clearEnemigos1() {
+		this.enemigos1 = this.enemigos1.filter(
+			(enemigo1) => enemigo1.pos.x + enemigo1.width > 0
 		);
 	},
 
 	isCollision() {
-		return this.obstacles.some(
-			(obstacle) =>
-				this.player.pos.x + this.player.width - 30 > obstacle.pos.x &&
-				this.player.pos.x < obstacle.pos.x + obstacle.width &&
-				this.player.pos.y + this.player.height - 40 > obstacle.pos.y &&
-				this.player.pos.y < obstacle.pos.y + obstacle.height
+		return this.enemigos1.some(
+			(enemigo1) =>
+				this.player.pos.x + this.player.width - 55 > enemigo1.pos.x &&
+				this.player.pos.x < enemigo1.pos.x + enemigo1.width &&
+				this.player.pos.y + this.player.height - 65 > enemigo1.pos.y &&
+				this.player.pos.y < enemigo1.pos.y + enemigo1.height
 		);
 	},
 
 	isCollisionBullet() {
 		return this.player.bullets.some((bullet) => {
-			return this.obstacles.some((obstacle) => {
+			return this.enemigos1.some((enemigo1) => {
 				const isCollision =
-					bullet.pos.x + bullet.radius > obstacle.pos.x &&
-					bullet.pos.x - bullet.radius < obstacle.pos.x + obstacle.width &&
-					bullet.pos.y + bullet.radius > obstacle.pos.y &&
-					bullet.pos.y - bullet.radius < obstacle.pos.y + obstacle.height;
+					bullet.pos.x + bullet.radius > enemigo1.pos.x &&
+					bullet.pos.x - bullet.radius < enemigo1.pos.x + enemigo1.width &&
+					bullet.pos.y + bullet.radius > enemigo1.pos.y &&
+					bullet.pos.y - bullet.radius < enemigo1.pos.y + enemigo1.height;
 
 				if (isCollision) {
-					this.obstacles = this.obstacles.filter((o) => o !== obstacle);
+					this.enemigos1 = this.enemigos1.filter((o) => o !== enemigo1);
 					this.player.bullets = this.player.bullets.filter((b) => b !== bullet);
 				}
 
@@ -113,9 +115,16 @@ const Game = {
 		});
 	},
 
-	generateObstacle() {
+	generateEnemigo1() {
 		console.log(this);
-		this.obstacles.push(new Obstacle(this));
+
+		if(Math.random() > 0.5) {
+			this.enemigos1.push(new Enemigo2(this));
+		} else {
+			this.enemigos1.push(new Enemigo1(this));
+		}
+		
+		
 	},
 
 	clear() {
