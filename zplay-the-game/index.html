@@ -15,16 +15,97 @@
 		
 
 		<style>
-			body {
-				margin: 0;
-			}
-			canvas {
-				display: block;
-			}
+#start-screen {
+  
+ 
+  display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	background-color: black;
+	color: white;
+	
+   
+  font-family: Arial, sans-serif;
+  }
+  
+  #title {
+	font-size: 6rem;
+	font-weight: bold;
+	
+	text
+  text-align: center;
+	text-shadow: 2px 2px 4px #000000;
+	
+   
+  margin-bottom: 2rem;
+  }
+  
+  #instructions {
+	font-size: 2rem;
+	
+   
+  text-align: center;
+	text-shadow: 2px 2px 4px #000000;
+	margin-bottom: 1rem;
+  }
+  
+  #key {
+	background-color: #1e90ff;
+	color: white;
+	padding: 0.2rem 0.5rem;
+	border-radius: 0.2rem;
+	font-weight: bold;
+	box-shadow: 2px 2px 4px #000000;
+  }
+  
+  #win-condition {
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 2px 2px 4px #000000;
+	margin-bottom: 2rem;
+  }
+  
+  #start-button {
+	background-color: #1e90ff;
+	color: white;
+	border: none;
+	border-radius: 0.5rem;
+	
+   
+  font-size: 2rem;
+	font-weight: bold;
+	padding: 1rem 2rem;
+	cursor: pointer;
+	box-shadow: 2px 2px 4px #000000;
+	transition: background-color 0.2s;
+  }
+  
+  #start-button:hover {
+	background-color: #0077be;
+  }
 		</style>
 		<title>Document</title>
 	</head>
 	<body>
+
+		<main>
+
+		<div id="start-screen">
+
+			<h1 id="title">Naruto Ninja Noel</h1>
+
+			<p id="instructions">Presiona <span id="key">SPACE</span> para saltar y <span id="key">F</span> para disparar.</p>
+
+			<p id="win-condition">Llega a 30 segundos para ganar el juego</p>
+
+			<button id="start-button">START</button>
+
+		  </div>
+		
+		</main>
 		<canvas></canvas>
 	</body>
 </html>

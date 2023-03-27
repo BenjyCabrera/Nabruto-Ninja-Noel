@@ -12,6 +12,7 @@ const Game = {
 	init() {
 		const canvas = document.querySelector('canvas');
 
+		canvas.style.display = 'block';
 		canvas.width = this.width;
 		canvas.height = this.height;
 
@@ -32,30 +33,38 @@ const Game = {
 		this.score = 0;
 
 		this.scoreBoard.init(this.ctx);
+
+		this.bso = new Audio('BSO/nabruto.mp3');
+		this.bso.loop = true;
+		this.bso.play();
+		this.bso.volume = 0.2;
 	},
 
 	start() {
 		this.frameCounter = 0;
-
+		this.progress = 1;
 		this.animationLoopId = setInterval(() => {
 			this.clear();
 
 			this.frameCounter++;
 			this.score += 0.01;
 
-			if (this.frameCounter % 60 === 0) this.generateEnemigo1();
+			if (this.frameCounter % 80 === 0) this.generateEnemigo1();
 
 			this.drawAll();
 			this.moveAll();
 
 			this.scoreBoard.update(this.score);
 
-			//if (this.isCollision()) this.gameOver();
+			if (this.isCollision()) this.gameOver();
 
 			if (this.isCollisionBullet()) console.log('Colisión bullet');
 
 			this.clearEnemigos1();
 		}, 1000 / this.fps);
+
+			this.Win()
+			
 	},
 
 	drawAll() {
@@ -73,9 +82,9 @@ const Game = {
 	moveAll() {
 		this.background.move();
 
-		this.enemigos1.forEach((Enemigo1) => {
-			Enemigo1.move(this.frameCounter);
-		});
+		  this.enemigos1.forEach((enemigo1) => {
+    enemigo1.move(this.frameCounter);
+  });
 
 		this.player.move(this.frameCounter);
 	},
@@ -120,8 +129,10 @@ const Game = {
 
 		if(Math.random() > 0.5) {
 			this.enemigos1.push(new Enemigo2(this));
-		} else {
+		} else if(Math.random() > 0.5) {
 			this.enemigos1.push(new Enemigo1(this));
+		} else{
+			this.enemigos1.push(new Enemigo3(this));
 		}
 		
 		
@@ -133,6 +144,18 @@ const Game = {
 
 	gameOver() {
 		clearInterval(this.animationLoopId);
-		if (confirm('FIN DEL JUEGO. ¿VOLVER A EMPEAZAR?')) this.init();
+		if (confirm('FIN DEL JUEGO. ¿VOLVER A EMPEZAR?')) this.init();
 	},
+
+	Win() {
+		if (this.winTimeoutId) {
+		  clearTimeout(this.winTimeoutId);
+		}
+	  
+		this.winTimeoutId = setTimeout(() => {
+		  if (confirm("¡ERES EL GANADOR DEL JUEGO! ¿Quieres jugar de nuevo?")) {
+			this.init(); // Reinicia el juego
+		  }
+		}, 50000);
+	}
 };

@@ -17,16 +17,21 @@ class Bullet {
 		this.radius = 10;
 	}
 
-	draw() {
-		const { ctx } = this.game;
+	draw() {  
+		
+	const { ctx } = this.game;
 
-		ctx.beginPath();
-		ctx.save();
-		ctx.fillStyle = 'red';
-		ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2);
-		ctx.fill();
-		ctx.restore();
-		ctx.closePath();
+	const image = new Image();
+	image.src = 'assets/Kunai.png';
+	
+	image.addEventListener('load', () => {
+	  ctx.beginPath();
+	  ctx.save();
+	  ctx.drawImage(image, this.pos.x - this.radius, this.pos.y - this.radius, this.radius * 4, this.radius * 4);
+	  ctx.restore();
+	  ctx.closePath();
+	});
+	
 	}
 
 	move() {

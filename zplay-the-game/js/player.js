@@ -73,7 +73,7 @@ class Player {
 
 		if(this.actions.shoot){
 			this.currentSprite = this.sprites.Gun;
-		} else{ this.currentSprite = this.sprites.Run}
+		} else { this.currentSprite = this.sprites.Run}
 		
 		
 
@@ -109,7 +109,7 @@ class Player {
 					this.actions.shoot = true
 					this.bullets.push(new Bullet(this.game));
 				}
-			}, 400)
+			}, 200)
 	
 	
 		

@@ -10,6 +10,11 @@ class Obstacle {
 			x: game.width,
 			y: game.player.y0 + game.player.height - this.height,
 		};
+
+		this.speed = {
+			x: Math.random() * 5 + 5,
+			y: 0,
+		};
 	
 		this.dx = 10;
 	}
@@ -43,7 +48,7 @@ class Obstacle {
 	}
 
 	move() {
-		this.pos.x -= this.dx;
+		this.pos.x -= this.speed.x;
 	}
 }
 class Enemigo1 extends Obstacle{
@@ -77,7 +82,10 @@ class Enemigo3 extends Obstacle{
 		this.img = new Image();
 		this.img.src = 'assets/Enemigo3.png';
 
+		this.width = 196 * 0.8;
+		this.height = 180 * 0.8;
+
 		this.img.currentFrame = 0;
-		this.img.frameCount = 20;
+		this.img.frameCount = 24;
 	}
 }	
