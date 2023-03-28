@@ -1,11 +1,29 @@
 const ScoreBoard = {
 	ctx: undefined,
 	lastScore: 0,
-
+	displayLock: false,
 	init(ctx) {
 		this.ctx = ctx;
 	},
 
+	setLock() {
+		this.ctx.save()
+		this.ctx.fillStyle = '#e22a22';
+		this.ctx.fillText("DISPARO BLOQUEADO", 20, 100);
+
+
+		this.restore()
+	},
+
+	addLock() {
+
+		this.displayLock = true
+	
+	},
+
+	removeLock() {
+		this.displayLock = false
+	},
 	update(score) {
 		score = Math.floor(score);
 
@@ -25,6 +43,14 @@ const ScoreBoard = {
 		this.ctx.fillText(score, 20, 50);
 
 		this.ctx.restore();
+
+		if (this.displayLock)  {
+			this.ctx.save()
+			this.ctx.fillStyle = '#e22a22';
+			this.ctx.font = '20px Arial';
+			this.ctx.fillText("DISPARO BLOQUEADO", 20, 100);
+			this.ctx.restore()
+		}
 
 		this.lastScore = score;
 	},

@@ -44,6 +44,8 @@ class Player {
 			jump: false
 		}
 
+		this.lockedShoot = false
+
 	}
 
 	setCotrols() {
@@ -103,11 +105,20 @@ class Player {
 
 	shoot() {
 
-	
+		if(this.lockedShoot) return
+
 			setTimeout(() => {
 				if(!this.actions.shoot) {
 					this.actions.shoot = true
 					this.bullets.push(new Bullet(this.game));
+
+					this.lockedShoot = true	
+					this.game.scoreBoard.addLock()
+
+					setTimeout(() => {
+						this.lockedShoot = false
+						this.game.scoreBoard.removeLock()
+					}, 3000)
 				}
 			}, 200)
 	
