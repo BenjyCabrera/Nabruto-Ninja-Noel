@@ -37,7 +37,7 @@ const Game = {
 		this.bso = new Audio('BSO/nabruto.mp3');
 		this.bso.loop = true;
 		this.bso.play();
-		this.bso.volume = 0.2;
+		this.bso.volume = 0.6;
 	},
 
 	start() {
@@ -143,6 +143,7 @@ const Game = {
 	},
 
 	gameOver() {
+		this.bso.pause();
 		clearInterval(this.animationLoopId);
 		if (confirm('FIN DEL JUEGO. ¿VOLVER A EMPEZAR?')) this.init();
 	},

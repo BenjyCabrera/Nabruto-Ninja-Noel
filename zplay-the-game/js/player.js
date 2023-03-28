@@ -25,7 +25,7 @@ class Player {
 		console.log(this.y0)
 
 		this.pos = {
-			x: game.width * 0.0,
+			x: game.width * 0.2,
 			y: this.y0,
 		};
 
